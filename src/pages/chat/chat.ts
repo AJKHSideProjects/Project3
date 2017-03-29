@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 /*
   Generated class for the Chat page.
@@ -13,10 +14,8 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class ChatPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatPage');
+  items: FirebaseListObservable<any[]>;
+  constructor(af: AngularFire) {
+    this.items = af.database.list('/chats/1');
   }
-
 }

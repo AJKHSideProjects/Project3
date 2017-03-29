@@ -6,13 +6,17 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Chat</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Chat</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+    <ul>
+        <li class="text" *ngFor="let item of items | async">
+            {{item.$value}}
+        </li>
+    </ul>
 </ion-content>

@@ -14,6 +14,16 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthData } from '../providers/auth-data';
 
+import { AngularFireModule } from 'angularfire2';
+
+var config = {
+  apiKey: "AIzaSyBNWsgweTD3jS0Vsr4rX-JrjbyxEPYHBiY",
+  authDomain: "sharemusic-93eaf.firebaseapp.com",
+  databaseURL: "https://sharemusic-93eaf.firebaseio.com",
+  storageBucket: "sharemusic-93eaf.appspot.com",
+  messagingSenderId: "608734698171"
+};
+
 @NgModule({
   declarations: [
     MyApp,
@@ -26,12 +36,13 @@ import { AuthData } from '../providers/auth-data';
     Page2
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(config)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginPage ,
+    LoginPage,
     SignupPage,
     ResetPasswordPage,
     ChatPage
@@ -40,7 +51,7 @@ import { AuthData } from '../providers/auth-data';
     StatusBar,
     AuthData,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

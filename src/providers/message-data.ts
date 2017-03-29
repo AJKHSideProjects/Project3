@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import firebase from 'firebase';
+
 
 /*
   Generated class for the MessageData provider.
@@ -10,8 +10,10 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class MessageData {
-
-  constructor(public http: Http) {
+  public messages;
+  
+  constructor() {
+    this.messages = firebase.database().ref('/messages');
     console.log('Hello MessageData Provider');
   }
 
