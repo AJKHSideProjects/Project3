@@ -3,7 +3,7 @@ import {
 } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthData } from '../../providers/auth-data';
+import { AuthData } from '../../providers/authProvider';
 import { SignupPage } from '../signup/signup';
 import { ChatPage } from '../chat/chat';
 import { ResetPasswordPage } from '../reset-password/reset-password';

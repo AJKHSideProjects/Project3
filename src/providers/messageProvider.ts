@@ -11,10 +11,15 @@ import firebase from 'firebase';
 @Injectable()
 export class MessageData {
   public messages;
-  
+
   constructor() {
-    this.messages = firebase.database().ref('/messages');
     console.log('Hello MessageData Provider');
   }
 
+  postMessage(channel, message) {
+    return firebase.database().ref('/channels/' + channel).push({
+      message: message,
+      detail: 'something'
+    });
+  }
 }

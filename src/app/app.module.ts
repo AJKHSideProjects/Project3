@@ -12,7 +12,8 @@ import { SignupPage } from '../pages/signup/signup';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AuthData } from '../providers/auth-data';
+import { AuthData } from '../providers/authProvider';
+import { MessageData } from '../providers/messageProvider';
 
 import { AngularFireModule } from 'angularfire2';
 
@@ -31,9 +32,7 @@ var config = {
     ChatPage,
     SignupPage,
     ResetPasswordPage,
-    ProfilePage,
-    Page1,
-    Page2
+    ProfilePage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -50,6 +49,7 @@ var config = {
   providers: [
     StatusBar,
     AuthData,
+    MessageData,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

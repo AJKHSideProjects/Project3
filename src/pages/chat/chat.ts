@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { MessageData } from '../../providers/messageProvider';
 
 /*
   Generated class for the Chat page.
@@ -12,10 +13,21 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
   selector: 'page-chat',
   templateUrl: 'chat.html'
 })
-export class ChatPage {
 
+export class ChatPage {
   items: FirebaseListObservable<any[]>;
-  constructor(af: AngularFire) {
-    this.items = af.database.list('/chats/1');
+  messageData;
+  channel;
+  messageValue: string = '';
+  constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire, messageData: MessageData) {
+    this.channel = navParams.data.channel || {$key: 1};
+    this.messageData = messageData;
+    this.items = af.database.list('/channels/' + this.channel.$key);
+  }
+// use ngmodel... look that shit up
+  addMessage(message) {
+    this.messageData.postMessage(this.channel, message).then((message) => {
+      this.messageValue = null;
+    });
   }
 }
