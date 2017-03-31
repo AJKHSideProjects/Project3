@@ -14,6 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthData } from '../providers/authProvider';
 import { MessageData } from '../providers/messageProvider';
+import { ChannelProvider } from '../providers/channelProvider';
 
 import { AngularFireModule } from 'angularfire2';
 
@@ -50,6 +51,7 @@ var config = {
     StatusBar,
     AuthData,
     MessageData,
+    ChannelProvider,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

@@ -26,7 +26,7 @@ export class ChatPage {
   }
 // use ngmodel... look that shit up
   addMessage(message) {
-    this.messageData.postMessage(this.channel, message).then((message) => {
+    this.messageData.postMessage(this.channel.$key, message).then((message) => {
       this.messageValue = null;
     });
   }

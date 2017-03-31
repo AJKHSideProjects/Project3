@@ -17,10 +17,11 @@ export class ChannelProvider {
     this.channelList = firebase.database().ref('/channelList');
   }
 
-  createChannel(channel, message) {
-    return firebase.database().ref('/channelList/' + channel).push({
-      message: message,
-      detail: 'something'
+  createChannel(name) {
+    return this.channelList.push({
+      users: {},
+      settings: {},
+      name: name
     });
   }
 }
