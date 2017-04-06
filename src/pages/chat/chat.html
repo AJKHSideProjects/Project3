@@ -15,7 +15,6 @@
     </ul>
     <ion-item>
         <ion-input #newMessage (keyup.enter)="addMessage(newMessage.value);" [value]="messageValue" type=""></ion-input>
-
     </ion-item>
     <button ion-button (click)="addMessage(newMessage.value) ">Add</button>
 

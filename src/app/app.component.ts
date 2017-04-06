@@ -1,15 +1,15 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Nav, Platform, AlertController } from 'ionic-angular';
+import { Nav, Platform, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase'
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
-
 import { LoginPage } from '../pages/login/login';
 import { ChatPage } from '../pages/chat/chat';
+import { ChannelModal } from '../pages/channel-modal/channel-modal';
 
-import {ChannelProvider} from '../providers/channelProvider'
+import { ChannelProvider } from '../providers/channelProvider'
 
 @Component({
   templateUrl: 'app.html'
@@ -20,14 +20,13 @@ export class MyApp {
   rootPage: any = LoginPage;
   zone: NgZone;
   channelList: FirebaseListObservable<any[]>;
-  channelProvider: ChannelProvider;
-  alertController: any;
+  firebase: any;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, 
-              angularFire: AngularFire, channelProvider: ChannelProvider, alertController: AlertController) {
-    this.channelProvider = channelProvider;
-    this.alertController = alertController;
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+    public angularFire: AngularFire, public channelProvider: ChannelProvider, public modalController: ModalController) {
+    this.firebase = firebase;
     this.zone = new NgZone({});
+
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       this.zone.run(() => {
         if (!user) {
@@ -35,13 +34,15 @@ export class MyApp {
           unsubscribe();
         } else {
           this.rootPage = ChatPage;
+          this.channelList = angularFire.database.list('/userProfile/' + user.uid + '/subscriptions/channels')
+          this.channelList.forEach(element => {
+            console.log(element)
+          });
+          this.initializeApp();
           unsubscribe();
         }
       });
     });
-
-    this.channelList = angularFire.database.list('/channelList')
-    this.initializeApp();
   }
 
   initializeApp() {
@@ -52,39 +53,21 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
-  
+
 
   openChannel(channel) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(ChatPage, {channel: channel});
+    this.nav.setRoot(ChatPage, { channel: channel });
   }
 
   addChannel() {
-    let prompt = this.alertController.create({
-      title: 'Create Channel',
-      message: "Enter a name",
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Name'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Create',
-          handler: data => {
-            this.channelProvider.createChannel(data.name);
-          }
-        }
-      ]
+    let channelModal = this.modalController.create(ChannelModal, { userId: 8675309 });
+
+    channelModal.onDidDismiss(name => {
+      this.channelProvider.createChannel(name);
     });
-    prompt.present();
+
+    channelModal.present();
   }
 }

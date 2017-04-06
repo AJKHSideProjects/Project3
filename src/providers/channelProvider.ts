@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
 
-/*
-  Generated class for the AuthData provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class ChannelProvider {
   public fireAuth: any;
@@ -18,10 +12,18 @@ export class ChannelProvider {
   }
 
   createChannel(name) {
-    return this.channelList.push({
+    var key = this.channelList.push().key;
+
+    var channelData = {
       users: {},
       settings: {},
       name: name
-    });
+    }
+
+    var updates = {};
+    updates['/channelList/' + key] = channelData;
+    updates['/userProfile/' + this.fireAuth.currentUser.uid + '/subscriptions/channels/' + key] = name;
+
+    return firebase.database().ref().update(updates);
   }
 }
