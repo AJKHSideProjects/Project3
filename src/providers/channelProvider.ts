@@ -26,4 +26,8 @@ export class ChannelProvider {
 
     return firebase.database().ref().update(updates);
   }
+
+  unsubscribeUserFromChannel(channelId) {
+    firebase.database().ref('/userProfile/' + this.fireAuth.currentUser.uid + '/subscriptions/channels/' + channelId).remove();
+  }
 }

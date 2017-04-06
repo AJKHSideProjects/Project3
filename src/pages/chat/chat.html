@@ -1,8 +1,21 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>Chat</ion-title>
-        <button ion-button secondary menuToggle>Toggle Menu</button>
+        <ion-toolbar>
+            <button ion-button icon-only menuToggle>
+             <ion-icon name="menu"></ion-icon>
+            </button>
+
+            <ion-title>
+                {{channel.$value}}
+            </ion-title>
+
+            <ion-buttons end>
+                <button ion-button icon-only (click)="unsubscribe()">
+        <ion-icon name="remove-circle"></ion-icon>
+      </button>
+            </ion-buttons>
+        </ion-toolbar>
     </ion-navbar>
 
 </ion-header>

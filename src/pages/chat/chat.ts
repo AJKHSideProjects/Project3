@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { MessageData } from '../../providers/messageProvider';
+import { ChannelProvider } from '../../providers/channelProvider';
 
 /*
   Generated class for the Chat page.
@@ -19,7 +20,9 @@ export class ChatPage {
   messageData;
   channel;
   messageValue: string = '';
-  constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire, messageData: MessageData) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire, messageData: MessageData,
+  public channelProvider: ChannelProvider) {
     this.channel = navParams.data.channel || {$key: 1};
     this.messageData = messageData;
     this.items = af.database.list('/channels/' + this.channel.$key);
@@ -29,5 +32,9 @@ export class ChatPage {
     this.messageData.postMessage(this.channel.$key, message).then((message) => {
       this.messageValue = null;
     });
+  }
+
+  unsubscribe() {
+    this.channelProvider.unsubscribeUserFromChannel(this.channel.$key);
   }
 }
