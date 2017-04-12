@@ -29,17 +29,32 @@ export class ChatPage {
     this.items = af.database.list('/channels/' + this.channel.$key);
   }
 // use ngmodel... look that shit up
-  addMessage(message) {
+  addMessage(message: string) {
     this.messageData.postMessage(this.channel.$key, message).then((message) => {
-      this.messageValue = null;
+      this.messageValue = '';
     });
+
+    this.parseMessage(message);
   }
 
   unsubscribe() {
     this.channelProvider.unsubscribeUserFromChannel(this.channel.$key);
   }
 
-  searchSpotify(){
-    this.spotifyProvider.searchSpotify("On Letting Go");
+  parseMessage(message: string){
+    if (message.startsWith("/search")){
+      message = message.replace("/search","").trim();
+
+      this.spotifyProvider.searchSpotify(message)
+        .subscribe(data => {
+          var response = data.tracks.items[0];
+          console.log(response);
+
+          if(response){
+            console.log(response.uri);
+            this.addMessage(response.uri);
+          }
+        });
+    }
   }
 }

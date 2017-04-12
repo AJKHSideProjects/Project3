@@ -11,21 +11,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class SpotifyProvider {
 
-  response: any;
-
   constructor(public http: Http) {
     console.log('Hello SpotifyProvider Provider');
   }
 
   searchSpotify(queryString: string){
-    this.http.get('https://api.spotify.com/v1/search?q=' + queryString + '&type=track&limit=1')
-      .map(res => res.json())
-      .subscribe(data => this.response = data.tracks.items[0]);
-    console.log(this.response);
-
-    if(this.response){
-      console.log(this.response.uri)
-    }
+    return this.http.get('https://api.spotify.com/v1/search?q=' + queryString + '&type=track&limit=1')
+      .map(res => res.json());
   }
 
 }
