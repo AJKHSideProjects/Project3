@@ -15,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthData } from '../providers/authProvider';
 import { MessageData } from '../providers/messageProvider';
 import { ChannelProvider } from '../providers/channelProvider';
+import { SpotifyProvider } from '../providers/spotifyProvider';
 
 import { AngularFireModule } from 'angularfire2';
 
@@ -54,6 +55,7 @@ var config = {
     AuthData,
     MessageData,
     ChannelProvider,
+    SpotifyProvider,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
