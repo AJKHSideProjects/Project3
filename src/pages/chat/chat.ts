@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Content } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { MessageData } from '../../providers/messageProvider';
 import { ChannelProvider } from '../../providers/channelProvider';
@@ -17,6 +17,7 @@ import { SpotifyProvider } from '../../providers/spotifyProvider';
 })
 
 export class ChatPage {
+  @ViewChild(Content) content: Content
   items: FirebaseListObservable<any[]>;
   messageData;
   channel;
@@ -27,11 +28,13 @@ export class ChatPage {
     this.channel = navParams.data.channel || {$key: 1};
     this.messageData = messageData;
     this.items = af.database.list('/channels/' + this.channel.$key);
+    this.items.subscribe(x => {this.content.scrollToBottom(0)})
   }
+
 // use ngmodel... look that shit up
   addMessage(message: string) {
     this.messageData.postMessage(this.channel.$key, message).then((message) => {
-      this.messageValue = '';
+      this.messageValue = null;
     });
 
     this.parseMessage(message);

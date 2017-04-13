@@ -21,14 +21,30 @@
 </ion-header>
 
 <ion-content padding>
+
     <ul>
         <li class="text" *ngFor="let item of items | async">
             {{item.message}}
         </li>
     </ul>
-    <ion-item>
-        <ion-input #newMessage (keyup.enter)="addMessage(newMessage.value);" [value]="messageValue" type=""></ion-input>
-    </ion-item>
-    <button ion-button (click)="addMessage(newMessage.value) ">Add</button>
 
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <div class="chat">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-9>
+                        <ion-item>
+                            <ion-input #newMessage (keyup.enter)="addMessage(newMessage.value);" [value]="messageValue" type=""></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-3>
+                        <button ion-button id="addMessage" (click)="addMessage(newMessage.value) ">Send</button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </ion-toolbar>
+</ion-footer>

@@ -1,3 +1,23 @@
 page-chat {
-
+    background: #36393e!important;
+    color: hsla(0, 0%, 100%, .7);
+    margin-top: 0;
+    .scroll-content {
+        margin-top: 0!important;
+        margin-bottom: 5px!important;
+        padding-bottom: 70px!important;
+    }
+    .item-input {
+        background-color: initial;
+    }
+    #addMessage {
+        width: 100%;
+    }
+    .text {
+        color: hsla(0, 0%, 100%, .7);
+    }
+    #messages {
+        height: 100%;
+        overflow-y: scroll;
+    }
 }
