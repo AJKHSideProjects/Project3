@@ -24,4 +24,14 @@ export class SpotifyProvider {
     return this.http.get('https://api.spotify.com/v1/tracks/' + trackId)
       .map(res => res.json());
   }
+
+  getAlbum(albumId: string){
+    return this.http.get('https://api.spotify.com/v1/albums/' + albumId)
+      .map(res => res.json());
+  }
+
+  getArtist(artistId: string){
+    return this.http.get('https://api.spotify.com/v1/artists/' + artistId)
+      .map(res => res.json());
+  }
 }

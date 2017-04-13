@@ -67,6 +67,28 @@ export class ChatPage {
 
           this.addMessage(artist + ' - ' + album + ' - ' + trackName);
         })
+    } else if (message.startsWith('spotify:album:')){
+      var albumId = message.replace('spotify:album:','').trim();
+
+      this.spotifyProvider.getAlbum(albumId)
+        .subscribe(data => {
+          console.log(data);
+          var artist = data.artists[0].name;
+          var album = data.name;
+
+          this.addMessage(artist + ' - ' + album);
+        })
+    } else if (message.startsWith('spotify:artist:')){
+      var albumId = message.replace('spotify:artist:','').trim();
+
+      this.spotifyProvider.getArtist(albumId)
+        .subscribe(data => {
+          console.log(data);
+          var artist = data.name;
+          var genre = data.genres[0];
+
+          this.addMessage(artist + ' - ' + genre);
+        })
     }
   }
 }
