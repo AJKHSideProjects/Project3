@@ -15,9 +15,13 @@ export class SpotifyProvider {
     console.log('Hello SpotifyProvider Provider');
   }
 
-  searchSpotify(queryString: string){
+  search(queryString: string){
     return this.http.get('https://api.spotify.com/v1/search?q=' + queryString + '&type=track&limit=1')
       .map(res => res.json());
   }
 
+  getTrack(trackId: string){
+    return this.http.get('https://api.spotify.com/v1/tracks/' + trackId)
+      .map(res => res.json());
+  }
 }

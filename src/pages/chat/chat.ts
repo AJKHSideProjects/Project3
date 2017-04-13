@@ -43,9 +43,9 @@ export class ChatPage {
 
   parseMessage(message: string){
     if (message.startsWith("/search")){
-      message = message.replace("/search","").trim();
+      var searchQuery = message.replace("/search","").trim();
 
-      this.spotifyProvider.searchSpotify(message)
+      this.spotifyProvider.search(searchQuery)
         .subscribe(data => {
           var response = data.tracks.items[0];
           console.log(response);
@@ -55,6 +55,18 @@ export class ChatPage {
             this.addMessage(response.uri);
           }
         });
+    } else if (message.startsWith('spotify:track:')){
+      var trackId = message.replace('spotify:track:','').trim();
+
+      this.spotifyProvider.getTrack(trackId)
+        .subscribe(data => {
+          console.log(data);
+          var artist = data.artists[0].name;
+          var album = data.album.name;
+          var trackName = data.name;
+
+          this.addMessage(artist + ' - ' + album + ' - ' + trackName);
+        })
     }
   }
 }
