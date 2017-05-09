@@ -9,17 +9,17 @@ import firebase from 'firebase';
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class MessageData {
+export class MessageProvider {
   public messages;
 
   constructor() {
     console.log('Hello MessageData Provider');
   }
 
-  postMessage(channel, message) {
+  postMessage(channel, message, detail) {
     return firebase.database().ref('/channels/' + channel).push({
       message: message,
-      detail: 'something'
+      detail: detail
     });
   }
 }

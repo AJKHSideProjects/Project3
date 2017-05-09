@@ -5,7 +5,7 @@ import {
 } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthData } from '../../providers/authProvider';
+import { AuthProvider } from '../../providers/authProvider';
 
 @Component({
   selector: 'page-reset-password',
@@ -15,7 +15,7 @@ export class ResetPasswordPage {
   public resetPasswordForm;
 
 
-  constructor(public authData: AuthData, public formBuilder: FormBuilder,
+  constructor(public authData: AuthProvider, public formBuilder: FormBuilder,
     public nav: NavController, public loadingCtrl: LoadingController,
     public alertCtrl: AlertController) {
 

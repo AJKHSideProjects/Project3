@@ -12,8 +12,8 @@ import { SignupPage } from '../pages/signup/signup';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AuthData } from '../providers/authProvider';
-import { MessageData } from '../providers/messageProvider';
+import { AuthProvider } from '../providers/authProvider';
+import { MessageProvider } from '../providers/messageProvider';
 import { ChannelProvider } from '../providers/channelProvider';
 import { SpotifyProvider } from '../providers/spotifyProvider';
 
@@ -52,8 +52,8 @@ var config = {
   ],
   providers: [
     StatusBar,
-    AuthData,
-    MessageData,
+    AuthProvider,
+    MessageProvider,
     ChannelProvider,
     SpotifyProvider,
     SplashScreen,

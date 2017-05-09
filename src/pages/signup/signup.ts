@@ -4,7 +4,7 @@ import {
   AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthData } from '../../providers/authProvider';
+import { AuthProvider } from '../../providers/authProvider';
 import { ChatPage } from '../chat/chat';
 
 @Component({
@@ -16,7 +16,7 @@ export class SignupPage {
   loading: any;
 
 
-  constructor(public nav: NavController, public authData: AuthData, 
+  constructor(public nav: NavController, public authData: AuthProvider, 
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController, 
     public alertCtrl: AlertController) {
 

@@ -22,9 +22,18 @@
 
 <ion-content padding>
 
-    <ul>
-        <li class="text" *ngFor="let item of items | async">
-            {{item.message}}
+    <ul class="messageList">
+        <li class="message" *ngFor="let item of items | async">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-2>
+                        <div class="nameCircle">K</div>
+                    </ion-col>
+                    <ion-col col-10>
+                        <span *ngIf="item.detail.user">{{item.detail.user.email}}</span> <br/> {{item.message}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </li>
     </ul>
 

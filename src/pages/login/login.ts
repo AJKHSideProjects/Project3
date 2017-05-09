@@ -3,7 +3,7 @@ import {
 } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthData } from '../../providers/authProvider';
+import { AuthProvider } from '../../providers/authProvider';
 import { SignupPage } from '../signup/signup';
 import { ChatPage } from '../chat/chat';
 import { ResetPasswordPage } from '../reset-password/reset-password';
@@ -22,7 +22,7 @@ export class LoginPage {
   public loginForm;
   loading;
 
-  constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
+  constructor(public nav: NavController, public authData: AuthProvider, public formBuilder: FormBuilder,
     public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     this.loginForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required])],

@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Content } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { MessageData } from '../../providers/messageProvider';
+import { MessageProvider } from '../../providers/messageProvider';
+import { AuthProvider } from '../../providers/authProvider';
 import { ChannelProvider } from '../../providers/channelProvider';
 import { SpotifyProvider } from '../../providers/spotifyProvider';
 
@@ -23,17 +24,22 @@ export class ChatPage {
   channel;
   messageValue: string = '';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire, messageData: MessageData,
-  public channelProvider: ChannelProvider, public spotifyProvider: SpotifyProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire, messageData: MessageProvider,
+  public channelProvider: ChannelProvider, public spotifyProvider: SpotifyProvider, public authProvider: AuthProvider,
+  messageProvider: MessageProvider) {
     this.channel = navParams.data.channel || {$key: 1};
     this.messageData = messageData;
     this.items = af.database.list('/channels/' + this.channel.$key);
-    this.items.subscribe(x => {this.content.scrollToBottom(0)})
+    this.items.subscribe(x => {this.content && this.content.scrollToBottom(0)})
   }
 
-// use ngmodel... look that shit up
   addMessage(message: string) {
-    this.messageData.postMessage(this.channel.$key, message).then((message) => {
+    let detail = {
+      user: {
+        email: this.authProvider.getCurrentUser().email
+      }
+    }
+    this.messageData.postMessage(this.channel.$key, message, detail).then((message) => {
       this.messageValue = null;
     });
 

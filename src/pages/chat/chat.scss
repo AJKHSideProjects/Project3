@@ -6,6 +6,11 @@ page-chat {
         margin-top: 0!important;
         margin-bottom: 5px!important;
         padding-bottom: 70px!important;
+        padding-top: 60px!important;
+        overflow-y: auto!important;
+    }
+    .messageList {
+        padding: 0;
     }
     .item-input {
         background-color: initial;
@@ -13,8 +18,20 @@ page-chat {
     #addMessage {
         width: 100%;
     }
-    .text {
+    .message {
         color: hsla(0, 0%, 100%, .7);
+        list-style: none;
+    }
+    .nameCircle {
+        border-radius: 30px;
+        height: 35px;
+        width: 35px;
+        background-color: #3d5175;
+        color: white;
+        padding-top: 10px;
+        text-align: center;
+        font-weight: bold;
+        vertical-align: middle;
     }
     #messages {
         height: 100%;
