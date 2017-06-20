@@ -30,11 +30,9 @@ export class MessageProvider {
       spotifyUri: null,
       created: new Date().getTime(),
       user: {
-      email: this.authProvider.getCurrentUser().email
+        email: this.authProvider.getCurrentUser().email
       }
     };
-
-    this.postMessage(channel, message, detail);
 
     if (message.startsWith("/search")) {
       var searchQuery = message.replace("/search", "").trim();
@@ -44,14 +42,18 @@ export class MessageProvider {
           var response = data.tracks.items[0];
           console.log(response);
 
-          if (response) {
-            console.log(response.uri);
-            this.postMessage(channel, response.uri, {});
+          if (response && response.uri) {
+            detail.spotifyUri = response.uri;
+            this.postMessage(channel, message, detail);
+          } else {
+            this.postMessage(channel, message, detail);
           }
         });
     } else if (message.startsWith('spotify:')) {
       detail.spotifyUri = message;
-      this.postMessage(channel, null, detail);
+      this.postMessage(channel, message, detail);
+    } else {
+      this.postMessage(channel, message, detail);
     }
   }
 }
