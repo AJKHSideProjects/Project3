@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
 import { SpotifyProvider } from './spotifyProvider';
+import { AuthProvider } from './authProvider';
 
 
 /*
@@ -13,7 +14,7 @@ import { SpotifyProvider } from './spotifyProvider';
 export class MessageProvider {
   public messages;
 
-  constructor(public spotifyProvider: SpotifyProvider) {
+  constructor(public spotifyProvider: SpotifyProvider, public authProvider: AuthProvider) {
     console.log('Hello MessageData Provider');
   }
 
@@ -25,6 +26,16 @@ export class MessageProvider {
   }
 
   parseMessage(channel, message: string) {
+    let detail = {
+      spotifyUri: null,
+      created: new Date().getTime(),
+      user: {
+      email: this.authProvider.getCurrentUser().email
+      }
+    };
+
+    this.postMessage(channel, message, detail);
+
     if (message.startsWith("/search")) {
       var searchQuery = message.replace("/search", "").trim();
 
@@ -38,40 +49,9 @@ export class MessageProvider {
             this.postMessage(channel, response.uri, {});
           }
         });
-    } else if (message.startsWith('spotify:track:')) {
-      var trackId = message.replace('spotify:track:', '').trim();
-
-      this.spotifyProvider.getTrack(trackId)
-        .subscribe(data => {
-          console.log(data);
-          var artist = data.artists[0].name;
-          var album = data.album.name;
-          var trackName = data.name;
-
-          this.postMessage(channel, `${artist} - ${album} - ${trackName}`, {});
-        })
-    } else if (message.startsWith('spotify:album:')) {
-      var albumId = message.replace('spotify:album:', '').trim();
-
-      this.spotifyProvider.getAlbum(albumId)
-        .subscribe(data => {
-          console.log(data);
-          var artist = data.artists[0].name;
-          var album = data.name;
-
-          this.postMessage(channel, artist + ' - ' + album, {});
-        })
-    } else if (message.startsWith('spotify:artist:')) {
-      var albumId = message.replace('spotify:artist:', '').trim();
-
-      this.spotifyProvider.getArtist(albumId)
-        .subscribe(data => {
-          console.log(data);
-          var artist = data.name;
-          var genre = data.genres[0];
-
-          this.postMessage(channel, artist + ' - ' + genre, {});
-        })
+    } else if (message.startsWith('spotify:')) {
+      detail.spotifyUri = message;
+      this.postMessage(channel, null, detail);
     }
   }
 }

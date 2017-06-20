@@ -37,24 +37,9 @@ export class ChatPage {
   }
 
   addMessage(message: string) {
-    let detail = {
-      spotifyUri: null,
-      created: new Date().getTime(),
-      user: {
-        email: this.authProvider.getCurrentUser().email
-      }
-    };
-
-   if (message.startsWith('spotify:track:')) {
-     detail.spotifyUri = message;
-   }
-
     if (message) {
-      this.messageProvider.postMessage(this.channel.$key, message, detail).then((message) => {
-        this.messageValue = null;
-      });
-
       this.messageProvider.parseMessage(this.channel.$key, message);
+      this.messageValue = null;
     }
   }
 
