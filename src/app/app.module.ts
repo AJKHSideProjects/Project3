@@ -19,6 +19,26 @@ import { SpotifyProvider } from '../providers/spotifyProvider';
 
 import { AngularFireModule } from 'angularfire2';
 
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
+const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': 'b0f05f7a'
+  },
+  'push': {
+    'sender_id': '608734698171',
+    'pluginConfig': {
+      'ios': {
+        'badge': true,
+        'sound': true
+      },
+      'android': {
+        'iconColor': '#343434'
+      }
+    }
+  }
+};
+
 var config = {
   apiKey: "AIzaSyBNWsgweTD3jS0Vsr4rX-JrjbyxEPYHBiY",
   authDomain: "sharemusic-93eaf.firebaseapp.com",
@@ -39,6 +59,7 @@ var config = {
   ],
   imports: [
     IonicModule.forRoot(MyApp),
+    CloudModule.forRoot(cloudSettings),
     AngularFireModule.initializeApp(config)
   ],
   bootstrap: [IonicApp],
