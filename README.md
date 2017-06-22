@@ -17,5 +17,5 @@ nvm use
 yarn install
 
 # Run a local server that will run the app in your browser.
-ionic --verbose serve
+yarn ionic:serve
 ```
