@@ -1,6 +1,5 @@
 {
   "name": "ShareMusic",
   "app_id": "b0f05f7a",
-  "v2": true,
-  "typescript": true
+  "type": "ionic-angular"
 }
