@@ -9,9 +9,16 @@ page-chat {
         padding-top: 60px!important;
         overflow-y: auto!important;
     }
+
     .messageList {
+        .message {
+          .username {
+            color: white;
+          }
+        }
         padding: 0;
     }
+
     .item-input {
         background-color: initial;
     }

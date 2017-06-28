@@ -6,6 +6,7 @@ import { AuthProvider } from '../../providers/authProvider';
 import { ChannelProvider } from '../../providers/channelProvider';
 import { SpotifyProvider } from '../../providers/spotifyProvider';
 import { DomSanitizer } from '@angular/platform-browser';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 /*
   Generated class for the Chat page.
 
@@ -22,24 +23,32 @@ export class ChatPage {
   items: FirebaseListObservable<any[]>;
   channel;
   messageValue: string = '';
+  messageForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire, messageData: MessageProvider,
   public channelProvider: ChannelProvider, public spotifyProvider: SpotifyProvider, public authProvider: AuthProvider,
-  public messageProvider: MessageProvider, public sanitizer: DomSanitizer) {
+  public messageProvider: MessageProvider, public sanitizer: DomSanitizer, private formBuilder: FormBuilder) {
     this.channel = navParams.data.channel || {$key: 1};
     this.items = af.database.list('/channels/' + this.channel.$key);
-    this.items.subscribe(x => {this.content && this.content.scrollToBottom(0)})
+    this.items.subscribe(x => {this.content && this.content.scrollToBottom(0)});
+    this.messageForm = this.formBuilder.group({
+      message: ['', Validators.required],
+    });
+  }
+
+  logForm(){
+    console.log(this.messageForm.value)
   }
 
   encodeURI(uri) {
-    let url = `https://embed.spotify.com/?uri=${encodeURIComponent(uri)}`
+    let url = `https://embed.spotify.com/?uri=${encodeURIComponent(uri)}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  addMessage(message: string) {
-    if (message) {
-      this.messageProvider.parseMessage(this.channel.$key, message);
-      this.messageValue = null;
+  addMessage() {
+    if (this.messageForm.value.message) {
+      this.messageProvider.parseMessage(this.channel.$key, this.messageForm.value.message);
+      this.messageForm.reset();
     }
   }
 
