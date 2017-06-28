@@ -36,10 +36,6 @@ export class ChatPage {
     });
   }
 
-  logForm(){
-    console.log(this.messageForm.value)
-  }
-
   encodeURI(uri) {
     let url = `https://embed.spotify.com/?uri=${encodeURIComponent(uri)}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);

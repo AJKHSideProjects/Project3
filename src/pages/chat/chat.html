@@ -30,13 +30,14 @@
                         <div class="nameCircle">{{item.detail?.user?.email?.substring(0, 1).toUpperCase()}}</div>
                     </ion-col>
                     <ion-col col-10>
-                        <span *ngIf="item.detail?.user?.email" class="username">{{item.detail.user.email.substring(0, item.detail.user.email.indexOf('@'))}}</span> <br/> {{item.message}}
-                    </ion-col>
-                </ion-row>
-                <ion-row *ngIf="item.detail?.spotifyUri">
-                  <ion-col col-2></ion-col>
-                  <ion-col col-10>
-                    <iframe [src]='encodeURI(item.detail.spotifyUri)' width="100%" height="380" frameborder="0" allowtransparency="true"></iframe>
+                        <ion-row class="heading">
+                            <span *ngIf="item.detail?.user?.email" class="username">{{item.detail.user.email.substring(0, item.detail.user.email.indexOf('@'))}}</span>
+                            <span *ngIf="item.detail?.created" class="timestamp">{{item.detail.created | date:'MM/dd/yyyy @ h:mma'}}</span>
+                        </ion-row>
+                        <ion-row *ngIf="item.detail?.spotifyUri" class="spotifyPlayer">
+                            <iframe [src]='encodeURI(item.detail.spotifyUri)' width="100%" height="380" frameborder="0" allowtransparency="true"></iframe>
+                        </ion-row>
+                        <ion-row> {{item.message}} </ion-row>
                   </ion-col>
                 </ion-row>
             </ion-grid>
@@ -45,8 +46,8 @@
 
 </ion-content>
 
-<ion-footer>
-    <ion-toolbar>
+<ion-footer class="chatFooter">
+    <ion-toolbar class="chatFooter">
         <div class="chat">
           <form [formGroup]="messageForm" (ngSubmit)="addMessage()">
 

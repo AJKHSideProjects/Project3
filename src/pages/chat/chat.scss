@@ -12,13 +12,27 @@ page-chat {
 
     .messageList {
         .message {
-          .username {
-            color: white;
-          }
+            .heading {
+              margin-bottom: 5px;
+            }
+            .username {
+              color: white;
+            }
+            .timestamp {
+              color: #616060;
+              padding-top: 3px;
+              margin-left: 10px;
+              font-size: 10px;
+            }
+            .spotifyPlayer {
+              margin-bottom: 5px;
+            }
         }
         padding: 0;
     }
-
+    .chatFooter {
+      height: 50px;
+    }
     .item-input {
         background-color: initial;
     }
@@ -32,6 +46,7 @@ page-chat {
     .nameCircle {
         border-radius: 30px;
         height: 35px;
+      margin-top: 5px;
         width: 35px;
         background-color: #3d5175;
         color: white;
