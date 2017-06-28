@@ -4,7 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase'
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { Push, PushToken } from '@ionic/cloud-angular';
 
 import { LoginPage } from '../pages/login/login';
 import { ChatPage } from '../pages/chat/chat';
@@ -24,8 +23,7 @@ export class MyApp {
   firebase: any;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    public angularFire: AngularFire, public channelProvider: ChannelProvider, public modalController: ModalController,
-    public push: Push) {
+    public angularFire: AngularFire, public channelProvider: ChannelProvider, public modalController: ModalController) {
     this.firebase = firebase;
     this.zone = new NgZone({});
 
@@ -53,17 +51,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
-      this.push.register().then((t: PushToken) => {
-        return this.push.saveToken(t);
-      }).then((t: PushToken) => {
-        console.log('Token saved:', t.token);
-      })
-
-      this.push.rx.notification()
-        .subscribe((msg) => {
-          alert(msg.title + ': ' + msg.text)
-        })
     });
   }
 
