@@ -52,6 +52,20 @@ export class MessageProvider {
     } else if (message.startsWith('spotify:')) {
       detail.spotifyUri = message;
       this.postMessage(channel, message, detail);
+    } else if (message.startsWith('https://open.spotify.com/')){
+      if (message.startsWith('https://open.spotify.com/track/')){
+        var trackId = message.split("/")[4];
+        detail.spotifyUri = "spotify:track:" + trackId;
+        this.postMessage(channel, message, detail);
+      } else if (message.startsWith('https://open.spotify.com/album/')){
+        var trackId = message.split("/")[4];
+        detail.spotifyUri = "spotify:album:" + trackId;
+        this.postMessage(channel, message, detail);
+      } else if (message.startsWith('https://open.spotify.com/artist/')){
+        var trackId = message.split("/")[4];
+        detail.spotifyUri = "spotify:artist:" + trackId;
+        this.postMessage(channel, message, detail);
+      }
     } else {
       this.postMessage(channel, message, detail);
     }
