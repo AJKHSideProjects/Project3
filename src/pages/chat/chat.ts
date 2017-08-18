@@ -1,12 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content } from 'ionic-angular';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { MessageProvider } from '../../providers/messageProvider';
-import { AuthProvider } from '../../providers/authProvider';
-import { ChannelProvider } from '../../providers/channelProvider';
-import { SpotifyProvider } from '../../providers/spotifyProvider';
-import { DomSanitizer } from '@angular/platform-browser';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {Component, ViewChild} from '@angular/core';
+import {Content, NavController, NavParams} from 'ionic-angular';
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {MessageProvider} from '../../providers/messageProvider';
+import {AuthProvider} from '../../providers/authProvider';
+import {ChannelProvider} from '../../providers/channelProvider';
+import {SpotifyProvider} from '../../providers/spotifyProvider';
+import {DomSanitizer} from '@angular/platform-browser';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 /*
   Generated class for the Chat page.
 
@@ -26,11 +27,13 @@ export class ChatPage {
   messageForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire, messageData: MessageProvider,
-  public channelProvider: ChannelProvider, public spotifyProvider: SpotifyProvider, public authProvider: AuthProvider,
-  public messageProvider: MessageProvider, public sanitizer: DomSanitizer, private formBuilder: FormBuilder) {
+              public channelProvider: ChannelProvider, public spotifyProvider: SpotifyProvider, public authProvider: AuthProvider,
+              public messageProvider: MessageProvider, public sanitizer: DomSanitizer, private formBuilder: FormBuilder) {
     this.channel = navParams.data.channel || {$key: 1};
     this.items = af.database.list('/channels/' + this.channel.$key);
-    this.items.subscribe(x => {this.content && this.content.scrollToBottom(0)});
+    this.items.subscribe(x => {
+      this.content && this.content.scrollToBottom(0)
+    });
     this.messageForm = this.formBuilder.group({
       message: ['', Validators.required],
     });
