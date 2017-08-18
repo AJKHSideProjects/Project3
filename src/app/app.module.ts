@@ -4,7 +4,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { ChannelModal } from '../pages/channel-modal/channel-modal';
-// import { MessageDetailPage } from '../pages/message-detail/message-detail';
 import { ChatPage } from '../pages/chat/chat';
 import { ProfilePage } from '../pages/profile/profile';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
@@ -18,8 +17,9 @@ import { ChannelProvider } from '../providers/channelProvider';
 import { SpotifyProvider } from '../providers/spotifyProvider';
 
 import { AngularFireModule } from 'angularfire2';
+import { Push } from '@ionic-native/push';
 
-var config = {
+let config = {
   apiKey: "AIzaSyBNWsgweTD3jS0Vsr4rX-JrjbyxEPYHBiY",
   authDomain: "sharemusic-93eaf.firebaseapp.com",
   databaseURL: "https://sharemusic-93eaf.firebaseio.com",
@@ -39,7 +39,7 @@ var config = {
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(config)
+    AngularFireModule.initializeApp(config),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -57,6 +57,7 @@ var config = {
     ChannelProvider,
     SpotifyProvider,
     SplashScreen,
+    Push,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

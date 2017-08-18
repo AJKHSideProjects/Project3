@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Nav, Platform, ModalController } from 'ionic-angular';
+import {Nav, Platform, ModalController, AlertController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase'
@@ -10,6 +10,7 @@ import { ChatPage } from '../pages/chat/chat';
 import { ChannelModal } from '../pages/channel-modal/channel-modal';
 
 import { ChannelProvider } from '../providers/channelProvider'
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,8 +23,8 @@ export class MyApp {
   channelList: FirebaseListObservable<any[]>;
   firebase: any;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    public angularFire: AngularFire, public channelProvider: ChannelProvider, public modalController: ModalController) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public push: Push,
+    public angularFire: AngularFire, public channelProvider: ChannelProvider, public modalController: ModalController, public alertCtrl: AlertController) {
     this.firebase = firebase;
     this.zone = new NgZone({});
 
@@ -51,8 +52,42 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.pushSetup();
     });
   }
+
+  pushSetup() {
+    const options: PushOptions = {
+      android: {
+        senderID: '608734698171'
+      },
+      ios: {
+        alert: 'true',
+        badge: true,
+        sound: 'false'
+      },
+      windows: {}
+    };
+
+    const pushObject: PushObject = this.push.init(options);
+
+    pushObject.on('notification').subscribe((notification: any) => {
+      if (notification.additionalData.foreground) {
+        let youralert = this.alertCtrl.create({
+          title: 'New Push notification',
+          message: notification.message
+        });
+        youralert.present();
+      }
+    });
+
+    pushObject.on('registration').subscribe((registration: any) => {
+      //do whatever you want with the registration ID
+    });
+
+    pushObject.on('error').subscribe(error => alert('Error with Push plugin' + error));
+  }
+
 
 
   openChannel(channel) {
