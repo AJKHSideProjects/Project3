@@ -32,7 +32,9 @@ export class ChatPage {
   public modalController: ModalController) {
     this.channel = navParams.data.channel || {$key: 1};
     this.items = af.database.list('/channels/' + this.channel.$key);
-    this.items.subscribe(x => {this.content && this.content.scrollToBottom(0)});
+    this.items.subscribe(x => {
+      this.content && this.content.scrollToBottom(0)
+    });
     this.messageForm = this.formBuilder.group({
       message: ['', Validators.required],
     });

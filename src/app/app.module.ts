@@ -17,6 +17,7 @@ import { AuthProvider } from '../providers/authProvider';
 import { MessageProvider } from '../providers/messageProvider';
 import { ChannelProvider } from '../providers/channelProvider';
 import { SpotifyProvider } from '../providers/spotifyProvider';
+import { SafePipe } from '../pipes/safepipe';
 
 import { AngularFireModule } from 'angularfire2';
 
@@ -38,6 +39,7 @@ var config = {
     ProfilePage,
     ChannelModal,
     InviteUserModal
+    SafePipe
   ],
   imports: [
     IonicModule.forRoot(MyApp),
