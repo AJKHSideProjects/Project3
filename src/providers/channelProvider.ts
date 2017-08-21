@@ -30,4 +30,8 @@ export class ChannelProvider {
   unsubscribeUserFromChannel(channelId) {
     firebase.database().ref('/userProfile/' + this.fireAuth.currentUser.uid + '/subscriptions/channels/' + channelId).remove();
   }
+
+  inviteUserToChannel(email) {
+
+  }
 }

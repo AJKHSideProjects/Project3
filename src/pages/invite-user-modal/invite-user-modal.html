@@ -1,0 +1,15 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>invite-user-modal</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-item>
+        <ion-input #userEmail (keyup.enter)="inviteUser(userEmail.value);" [value]="userEmailValue" type=""></ion-input>
+    </ion-item>
+    <button ion-button (click)="inviteUser(userEmail.value) ">Add</button>
+</ion-content>

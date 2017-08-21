@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { ChannelModal } from '../pages/channel-modal/channel-modal';
+import { InviteUserModal } from '../pages/invite-user-modal/invite-user-modal';
 // import { MessageDetailPage } from '../pages/message-detail/message-detail';
 import { ChatPage } from '../pages/chat/chat';
 import { ProfilePage } from '../pages/profile/profile';
@@ -35,7 +36,8 @@ var config = {
     SignupPage,
     ResetPasswordPage,
     ProfilePage,
-    ChannelModal
+    ChannelModal,
+    InviteUserModal
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -48,7 +50,8 @@ var config = {
     SignupPage,
     ResetPasswordPage,
     ChatPage,
-    ChannelModal
+    ChannelModal,
+    InviteUserModal
   ],
   providers: [
     StatusBar,

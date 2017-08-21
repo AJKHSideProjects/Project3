@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content } from 'ionic-angular';
+import { NavController, NavParams, Content, ModalController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { MessageProvider } from '../../providers/messageProvider';
 import { AuthProvider } from '../../providers/authProvider';
@@ -7,6 +7,7 @@ import { ChannelProvider } from '../../providers/channelProvider';
 import { SpotifyProvider } from '../../providers/spotifyProvider';
 import { DomSanitizer } from '@angular/platform-browser';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { InviteUserModal } from '../invite-user-modal/invite-user-modal';
 /*
   Generated class for the Chat page.
 
@@ -27,7 +28,8 @@ export class ChatPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire, messageData: MessageProvider,
   public channelProvider: ChannelProvider, public spotifyProvider: SpotifyProvider, public authProvider: AuthProvider,
-  public messageProvider: MessageProvider, public sanitizer: DomSanitizer, private formBuilder: FormBuilder) {
+  public messageProvider: MessageProvider, public sanitizer: DomSanitizer, private formBuilder: FormBuilder,
+  public modalController: ModalController) {
     this.channel = navParams.data.channel || {$key: 1};
     this.items = af.database.list('/channels/' + this.channel.$key);
     this.items.subscribe(x => {this.content && this.content.scrollToBottom(0)});
@@ -50,5 +52,16 @@ export class ChatPage {
 
   unsubscribe() {
     this.channelProvider.unsubscribeUserFromChannel(this.channel.$key);
+  }
+
+  inviteUserToChannel(){
+    let self = this;
+    let inviteUserModalPage = this.modalController.create(InviteUserModal, { userId: 8675309 });
+
+    inviteUserModalPage.onDidDismiss(email => {
+      self.channelProvider.inviteUserToChannel(email);
+    });
+
+    inviteUserModalPage.present();
   }
 }
