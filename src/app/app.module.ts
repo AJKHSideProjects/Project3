@@ -6,6 +6,7 @@ import { LoginPage } from '../pages/login/login';
 import { ChannelModal } from '../pages/channel-modal/channel-modal';
 // import { MessageDetailPage } from '../pages/message-detail/message-detail';
 import { ChatPage } from '../pages/chat/chat';
+import { ChatListComponent } from '../pages/chat/chatList.ts';
 import { ProfilePage } from '../pages/profile/profile';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { SignupPage } from '../pages/signup/signup';
@@ -37,6 +38,7 @@ var config = {
     ResetPasswordPage,
     ProfilePage,
     ChannelModal,
+    ChatListComponent,
     SafePipe
   ],
   imports: [
