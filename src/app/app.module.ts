@@ -38,7 +38,7 @@ var config = {
     ResetPasswordPage,
     ProfilePage,
     ChannelModal,
-    InviteUserModal
+    InviteUserModal,
     SafePipe
   ],
   imports: [
