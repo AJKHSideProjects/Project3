@@ -61,7 +61,7 @@ export class ChatPage {
     let inviteUserModalPage = this.modalController.create(InviteUserModal, { userId: 8675309 });
 
     inviteUserModalPage.onDidDismiss(email => {
-      self.channelProvider.inviteUserToChannel(email);
+      self.channelProvider.inviteUserToChannel(email, self.channel.$key);
     });
 
     inviteUserModalPage.present();

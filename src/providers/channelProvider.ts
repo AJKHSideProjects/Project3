@@ -31,7 +31,23 @@ export class ChannelProvider {
     firebase.database().ref('/userProfile/' + this.fireAuth.currentUser.uid + '/subscriptions/channels/' + channelId).remove();
   }
 
-  inviteUserToChannel(email) {
+  inviteUserToChannel(email, channelId) {
+    var updates = {};
+    
 
+    firebase.database().ref('channelList/' + channelId).once('value').then(function(channelSnapshot){
+      firebase.database().ref('userProfile').orderByChild('email').equalTo(email).once('value').then(function(userSnapshot){
+        var userId;
+        userSnapshot.forEach(function(user){
+          userId = user.key;
+          return true;
+        });
+        var channelName = channelSnapshot.child('name').val();
+        updates['/userProfile/' + userId + '/subscriptions/channels/' + channelId] = channelName;
+        firebase.database().ref().update(updates);
+    });
+    });
   }
+
+
 }
