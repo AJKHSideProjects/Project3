@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 export class AuthProvider {
   public fireAuth: any;
   public userProfile: any;
-  public currentUser: any;;
+  public currentUser: any;
 
   constructor() {
     this.fireAuth = firebase.auth();
@@ -22,7 +22,7 @@ export class AuthProvider {
   loginUser(email, password): firebase.Promise<any> {
     this.currentUser = {
       email: email
-    }
+    };
     return this.fireAuth.signInWithEmailAndPassword(email, password);
   }
 
@@ -35,7 +35,7 @@ export class AuthProvider {
       .then((newUser) => {
         this.currentUser = {
           email: email
-        }
+        };
         this.userProfile.child(newUser.uid).set({ email: email });
       });
   }

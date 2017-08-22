@@ -31,7 +31,20 @@ export class ChatPage {
   public messageProvider: MessageProvider, public sanitizer: DomSanitizer, private formBuilder: FormBuilder,
   public modalController: ModalController) {
     this.channel = navParams.data.channel || {$key: 1};
-    this.items = af.database.list('/channels/' + this.channel.$key);
+    let lastUriIndex;
+    this.items = <FirebaseListObservable<any>> af.database.list('/channels/' + this.channel.$key).map(items => {
+      return items.map((item, i) => {
+        item.renderSpotifyPlayer = item.detail ? item.detail.spotifyUri : false;
+        if (item.renderSpotifyPlayer && lastUriIndex != null) {
+          items[lastUriIndex].renderSpotifyPlayer = false;
+        }
+        if (item.renderSpotifyPlayer) lastUriIndex = i;
+        if (item.detail && item.detail.user && item.detail.user.email && items[i-1] && items[i-1].detail && items[i-1].detail.user && items[i-1].detail.user.email && (items[i-1].detail.user.email == item.detail.user.email)) {
+          item.sameUser = true;
+        }
+        return item;
+      })
+    });
     this.items.subscribe(x => {
       this.content && this.content.scrollToBottom(0)
     });
