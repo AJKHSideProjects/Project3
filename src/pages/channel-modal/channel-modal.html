@@ -1,13 +1,7 @@
-<!--
-  Generated template for the ChannelModal page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
     <ion-navbar>
-        <ion-title>channel-modal</ion-title>
+        <ion-title>Create Channel</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -17,5 +11,5 @@
     <ion-item>
         <ion-input #channelName (keyup.enter)="dismiss(channelName.value);" [value]="channelNameValue" type=""></ion-input>
     </ion-item>
-    <button ion-button (click)="dismiss(channelName.value) ">Add</button>
+    <button ion-button (click)="dismiss(channelName.value) ">Create</button>
 </ion-content>
