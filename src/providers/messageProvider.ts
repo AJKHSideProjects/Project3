@@ -18,6 +18,13 @@ export class MessageProvider {
     console.log('Hello MessageData Provider');
   }
 
+  editMessageDetail(channelId, messageId, detail) {
+    var updateCollection = {}
+    updateCollection['/channels/' + channelId + '/' + messageId] = {detail: detail}
+
+    return firebase.database().ref().update(updateCollection)
+  }
+
   postMessage(channel, message, detail) {
     return firebase.database().ref('/channels/' + channel).push({
       message: message,
@@ -39,7 +46,7 @@ export class MessageProvider {
 
       this.spotifyProvider.search(searchQuery)
         .subscribe(data => {
-          var response = data.tracks.items[0];
+          var response = data.json().tracks.items[0];
           console.log(response);
 
           if (response && response.uri) {

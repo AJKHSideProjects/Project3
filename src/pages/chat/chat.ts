@@ -42,6 +42,54 @@ export class ChatPage {
         if (item.detail && item.detail.user && item.detail.user.email && items[i-1] && items[i-1].detail && items[i-1].detail.user && items[i-1].detail.user.email && (items[i-1].detail.user.email == item.detail.user.email)) {
           item.sameUser = true;
         }
+
+        /*
+        ==================================
+        Temp Code - used to backfil details
+        ==================================
+        let uri = item.detail ? item.detail.spotifyUri : null
+        if (uri) {
+          if (uri.startsWith("spotify:track:")){
+            let trackId = uri.substring(14)
+            let trackResponse = spotifyProvider.getTrack(trackId)
+            trackResponse.subscribe(data => {
+              item.detail.track = data.json().name
+              item.detail.album = data.json().album.name
+              item.detail.artist = data.json().artists[0].name
+              //item.detail.image = data.json().images[1].url
+              item.detail.popularity = data.json().popularity
+              item.detail.type = data.json().type
+
+              messageProvider.editMessageDetail(this.channel.$key, item.$key, item.detail)
+            })
+          } else if (uri.startsWith("spotify:album:")){
+            let albumId = uri.substring(14)
+            let albumResponse = spotifyProvider.getAlbum(albumId)
+            albumResponse.subscribe(data => {
+              item.detail.album = data.json().name
+              item.detail.artist = data.json().artists[0].name
+              //item.detail.image = data.json().images[1].url
+              item.detail.popularity = data.json().popularity
+              item.detail.type = data.json().type
+
+              messageProvider.editMessageDetail(this.channel.$key, item.$key, item.detail)
+            })
+          } else if (uri.startsWith("spotify:artist:")){
+            let artistId = uri.substring(15)
+            let artistResponse = spotifyProvider.getArtist(artistId)
+            artistResponse.subscribe(data => {
+              item.detail.artist = data.json().name
+              //item.detail.image = data.json().images[1].url
+              item.detail.popularity = data.json().popularity
+              item.detail.type = data.json().type
+
+              messageProvider.editMessageDetail(this.channel.$key, item.$key, item.detail)
+            })
+          }
+        }
+        ================================
+        */
+
         return item;
       })
     });
