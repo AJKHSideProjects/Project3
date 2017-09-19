@@ -15,8 +15,35 @@
             <iframe [src]="item.detail.spotifyUri | safe" width="100%" height="380" frameborder="0" allowtransparency="true"></iframe>
           </ion-row>
           <ion-row *ngIf="item.detail?.spotifyUri && !item.renderSpotifyPlayer" class="spotifyPlayer">
-            <button ion-button (click)="renderSpotifyWidget(item)" id="addMessage"><i class="fa fa-spotify" style="margin-right: 5px;" aria-hidden="true"></i>
-              Play on Spotify</button>
+            <ion-card>
+              <div class="album-art" [ngStyle]="{ 'background-image': 'url(' + item.detail.image + ')' }"></div>
+              <!--<img src=""/>-->
+              <div class="card-title">{{item.detail?.track ? item.detail.track : item.detail?.album ? item.detail.album : ''}}</div>
+              <div class="card-subtitle">{{item.detail?.artist ? item.detail.artist : ''}}</div>
+              <ion-row no-padding>
+                <!--<ion-col>-->
+                  <!--<button ion-button clear small color="danger" icon-start>-->
+                    <!--<ion-icon name='star'></ion-icon>-->
+                    <!--Favorite-->
+                  <!--</button>-->
+                <!--</ion-col>-->
+                <ion-col text-center style="background-color: #2e3c56;">
+                  <button ion-button clear (click)="renderSpotifyWidget(item)" small style="color: white" icon-start>
+                    <i class="fa fa-spotify" style="margin-right: 5px;" aria-hidden="true"></i>
+                    Listen
+                  </button>
+                </ion-col>
+                <!--<ion-col text-right>-->
+                  <!--<button ion-button clear small color="danger" icon-start>-->
+                    <!--<ion-icon name='share-alt'></ion-icon>-->
+                    <!--Share-->
+                  <!--</button>-->
+                <!--</ion-col>-->
+              </ion-row>
+            </ion-card>
+
+            <!--<button ion-button (click)="renderSpotifyWidget(item)" id="addMessage"><i class="fa fa-spotify" style="margin-right: 5px;" aria-hidden="true"></i>-->
+              <!--Play on Spotify</button>-->
           </ion-row>
           <ion-row> {{item.message}}</ion-row>
         </ion-col>
