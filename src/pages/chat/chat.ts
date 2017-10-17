@@ -45,7 +45,7 @@ export class ChatPage {
 
         /*
         ==================================
-        Temp Code - used to backfil details
+        Temp Code - used to backfill details
         ==================================
         let uri = item.detail ? item.detail.spotifyUri : null
         if (uri) {
@@ -56,7 +56,7 @@ export class ChatPage {
               item.detail.track = data.json().name
               item.detail.album = data.json().album.name
               item.detail.artist = data.json().artists[0].name
-              //item.detail.image = data.json().images[1].url
+              item.detail.image = data.json().album.images[1].url
               item.detail.popularity = data.json().popularity
               item.detail.type = data.json().type
 
@@ -68,7 +68,7 @@ export class ChatPage {
             albumResponse.subscribe(data => {
               item.detail.album = data.json().name
               item.detail.artist = data.json().artists[0].name
-              //item.detail.image = data.json().images[1].url
+              item.detail.image = data.json().images[1].url
               item.detail.popularity = data.json().popularity
               item.detail.type = data.json().type
 
@@ -79,7 +79,7 @@ export class ChatPage {
             let artistResponse = spotifyProvider.getArtist(artistId)
             artistResponse.subscribe(data => {
               item.detail.artist = data.json().name
-              //item.detail.image = data.json().images[1].url
+              item.detail.image = data.json().images[1].url
               item.detail.popularity = data.json().popularity
               item.detail.type = data.json().type
 

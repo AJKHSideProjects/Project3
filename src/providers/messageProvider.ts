@@ -18,14 +18,7 @@ export class MessageProvider {
     console.log('Hello MessageData Provider');
   }
 
-  editMessageDetail(channelId, messageId, detail) {
-    var updateCollection = {}
-    updateCollection['/channels/' + channelId + '/' + messageId] = {detail: detail}
-
-    return firebase.database().ref().update(updateCollection)
-  }
-
-  postMessage(channel, message, detail) {
+    postMessage(channel, message, detail) {
     return firebase.database().ref('/channels/' + channel).push({
       message: message,
       detail: detail
@@ -46,18 +39,19 @@ export class MessageProvider {
 
       this.spotifyProvider.search(searchQuery)
         .subscribe(data => {
-          var response = data.json().tracks.items[0];
-          console.log(response);
+          var firstTrack = data.json().tracks.items[0]
 
-          if (response && response.uri) {
-            detail.spotifyUri = response.uri;
-            this.postMessage(channel, message, detail);
+          if (firstTrack) {
+            detail.spotifyUri = firstTrack.uri
+            detail = this.getSpotifyDetails(detail)
+            this.postMessage(channel, message, detail)
           } else {
-            this.postMessage(channel, message, detail);
+            this.postMessage(channel, message, detail)
           }
         });
     } else if (message.startsWith('spotify:')) {
       detail.spotifyUri = message;
+      detail = this.getSpotifyDetails(detail)
       this.postMessage(channel, message, detail);
 
     } else if (message.startsWith('https://open.spotify.com/')){
@@ -65,10 +59,45 @@ export class MessageProvider {
       var itemType = parsedItem[3]
       var itemId = parsedItem[4];
       detail.spotifyUri = "spotify:" + itemType + ":" + itemId;
+      detail = this.getSpotifyDetails(detail)
       this.postMessage(channel, message, detail);
 
     } else {
       this.postMessage(channel, message, detail);
     }
+  }
+
+  editMessageDetail(channelId, messageId, detail) {
+    var updateCollection = {}
+    updateCollection['/channels/' + channelId + '/' + messageId] = {detail: detail}
+
+    return firebase.database().ref().update(updateCollection)
+  }
+
+  getSpotifyDetails(detail) {
+    if (detail.spotifyUri.startsWith("spotify:track:")){
+      let trackId = this.getIdFromSpotifyUri(detail.spotifyUri)
+      let trackfirstTrack = this.spotifyProvider.getTrack(trackId)
+      detail = this.spotifyProvider.parseTrackResponse(trackfirstTrack, detail)
+      return detail
+
+    } else if (detail.spotifyUri.startsWith("spotify:album:")){
+      let albumId = this.getIdFromSpotifyUri(detail.spotifyUri)
+      let albumfirstTrack = this.spotifyProvider.getAlbum(albumId)
+      detail = this.spotifyProvider.parseAlbumResponse(albumfirstTrack, detail)
+      return detail
+      
+    } else if (detail.spotifyUri.startsWith("spotify:artist:")){
+      let artistId = this.getIdFromSpotifyUri(detail.spotifyUri)
+      let artistfirstTrack = this.spotifyProvider.getArtist(artistId)
+      detail = this.spotifyProvider.parseArtistResponse(artistfirstTrack, detail)
+      return detail
+      
+    }
+  }
+
+  getIdFromSpotifyUri(spotifyUri:string){
+    let stringArray = spotifyUri.split(":")
+    return stringArray[2]
   }
 }
